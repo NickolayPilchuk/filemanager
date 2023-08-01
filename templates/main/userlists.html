@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    {% block title %}<title>Users</title>{% endblock %}
+</head>
+<body>
+{% block content %}
+<br>
+
+<div>
+    <h1>Входящие запросы</h1>
+{% for request in friend_requests %}
+{{request.from_user.username}}
+<button onclick="location.href='{% url 'accept' id=request.id operation='accept' %}'" class="btn btn-primary" >Принять</button>
+<button onclick="location.href='{% url 'accept' id=request.id operation='decline' %}'" class="btn btn-secondary">Отклонить</button>
+    <hr>
+{% empty %}
+<p>No friend requests</p>
+{% endfor %}
+    </div>
+
+{% endblock %}
+</body>
+</html>

@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% block content %}
+<br>
+<br>
+<button type="button" onclick="location.href='{% url 'upload' %}'" class="btn btn-primary btn-lg">Загрузить файл</button>
+<br>
+<button type="button" onclick="location.href='{% url 'storage' %}'" class="btn btn-secondary btn-lg">Открыть моё хранилище</button>
+
+{% endblock %}

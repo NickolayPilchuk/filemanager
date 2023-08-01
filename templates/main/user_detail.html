@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    {% block title %}<title>{{user.username}}</title> {% endblock %}
+</head>
+<body>
+{% block content %}
+<br>
+<div>
+<h1>{{ viewed_user.username }}</h1>
+    <br>
+{% if viewed_user == user %}
+<h1>Вы просматриваете свою страницу</h1>
+{% else %}
+    {% if isfriend %}
+    <button class="btn btn-primary" onclick="location.href='{% url 'invite' user=viewed_user %}'">Удалить из друзей</button>
+    {% else %}
+    <button class="btn btn-primary" onclick="location.href='{% url 'invite' user=viewed_user %}'">Добавить в друзья</button>
+    {% endif %}
+<button class="btn btn-secondary">Заблокировать</button>
+{% endif %}
+    </div>
+{% endblock %}
+</body>
+</html>

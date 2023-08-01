@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    {% block title %}<title>Search results</title> {% endblock %}
+</head>
+<body>
+{% block content %}
+<br>
+{% for object in users %}
+<a href="{% url 'profile' pk=object.id %}">{{ object.username }}</a>
+{% empty %}
+<p>Ничего не найдено</p>
+{% endfor %}
+{% endblock %}
+</body>
+</html>

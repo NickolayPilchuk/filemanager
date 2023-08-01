@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    {% block title %}<title>{{ file.name }}</title>{% endblock %}
+</head>
+<body>
+{% block content%}
+<br>
+{% if allowed %}
+<div class="position-absolute top-50 start-50 translate-middle">
+    <h1>{{file.name}}</h1> <p>{{file.user.username}}</p>
+    <h6>{{file.description}}</h6>
+    </div>
+{% else %}
+<h1>Доступ к файлу ограничен</h1>
+{% endif %}
+{% endblock %}
+
+</body>
+</html>
