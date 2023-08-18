@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    {% block title %}<title>Your storage</title>{% endblock %}
+</head>
+<body>
+{% block content %}
+<br>
+<div>
+<button type="button" onclick="location.href='{% url 'upload' %}'" class="btn btn-primary btn-lg">Загрузить файл</button>
+    </div>
+<br>
+<hr>
+<p>Изменить настройки хранилища</p>
+<form action="" method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+{{ form.as_p }}
+<input class="btn btn-dark" type = "Submit" name="submit" value="Применить"/>
+</form>
+<div class="position-absolute top-50 start-50 translate-middle">
+<div class="container text-center">
+  <div class="row">
+      {% for file in page %}
+    <div class="col">
+      <div class="card" style="width: 18rem;">
+  <div class="card-body">
+    <h5 class="card-title">{{ file.name}}</h5>
+    <p class="card-text">{{ file.description}}</p>
+    <a href="{% url 'file' pk=file.id %} " class="btn btn-primary">Больше информации</a>
+  </div>
+</div>
+
+    </div>
+      {% endfor %}
+
+  </div>
+    <br>
+    {% if page.paginator.num_pages < 5 %}
+    {% for num in page.paginator.page_range %}
+    {% if num == page.number %}
+    <button onclick="location.href='?page={{ num }}'" class="d-inline btn btn-dark">{{ num }}</button>
+    {% else %}
+    <button onclick="location.href='?page={{ num }}'" class="d-inline btn btn-light">{{ num }}</button>
+    {% endif %}
+    {% endfor %}
+    {% else %}
+
+
+    {% if page.has_previous %}
+    <button onclick='location.href="?page=1"' class="d-inline btn btn-light">1</button>
+      {% if page.number != 2 %}
+      <button onclick='location.href="?page={{ page.previous_page_number }}"' class="d-inline btn btn-light">{{ page.previous_page_number }}</button>
+      {% endif %}
+  {% endif %}
+    <button onclick='location.href="?page={{ page.number }}"' class="d-inline btn btn-dark">{{ page.number }}</button>
+    {% if page.has_next %}
+    <button onclick='location.href="?page={{ page.next_page_number }}"' class="d-inline btn btn-light">{{ page.next_page_number }}</button>
+      {% if page.number != page.paginator.num_pages|add:"-1" %}
+      <button onclick='location.href="?page={{ page.paginator.num_pages }}"' class="d-inline btn btn-light">{{page.paginator.num_pages}}</button>
+      {% endif %}
+  {% endif %}
+    {% endif %}
+</div>
+
+</div>
+{% endblock %}
+</body>
+</html>

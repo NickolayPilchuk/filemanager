@@ -8,11 +8,37 @@
 <body>
 {% block content %}
 <br>
+<br>
+<hr>
+<h1>Результаты поиска:</h1>
+<hr>
 {% for object in users %}
-<a href="{% url 'profile' pk=object.id %}">{{ object.username }}</a>
+<a class="link-offset-2 link-underline link-underline-opacity-100" href="{% url 'profile' pk=object.id %}">{{ object.username }}</a>
+<hr>
 {% empty %}
 <p>Ничего не найдено</p>
 {% endfor %}
+
+<span class="step-links">
+    <span class="current">
+            <h5>Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.</h5>
+        </span>
+        {% if page_obj.has_previous %}
+            <button onclick="location.href='?page=1&q={{query }}'" type="button" class="btn btn-primary"><<</button>
+            <button onclick="location.href='?page={{ page_obj.previous_page_number}}&q={{query }}'" type="button" class="btn btn-outline-primary">&lt</button>
+
+        {% endif %}
+
+        {% if page_obj.has_next %}
+
+     <button onclick="location.href='?page={{page_obj.next_page_number}}&q={{query }}'" type="button" class="btn btn-outline-primary">></button>
+            <button onclick="location.href='?page={{ page_obj.paginator.num_pages}}&q={{query }}'" type="button" class="btn btn-primary">>></button>
+
+        {% endif %}
+
+
+
+    </span>
 {% endblock %}
 </body>
 </html>

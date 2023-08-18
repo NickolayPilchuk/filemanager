@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    {% block title %} <title>Подтвердите удаление</title> {% endblock %}
+</head>
+<body>
+{% block content %}
+{% if allowed %}
+<div class="position-absolute top-50 start-50 translate-middle">
+<form method="post">{% csrf_token %}
+    <h1>Вы действительно хотите удалить "{{ object.name }}"?</h1>
+    {{ form }}
+    <input type="submit" class="btn btn-dark" value="Confirm">
+
+</form>
+</div>
+{% endif %}
+{% endblock %}
+</body>
+</html>

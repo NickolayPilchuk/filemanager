@@ -121,6 +121,7 @@ MEDIA_ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'media')
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
+LOGIN_REDIRECT_URL = 'home'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # SETTINGS_PATH = os.path.dirname(os.path.dirname(__file__))
 # TEMPLATE_DIRS = (

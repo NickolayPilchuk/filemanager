@@ -3,24 +3,67 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    {% block title %}<title>Users</title>{% endblock %}
+    {% block title %}<title>Пользователи</title>{% endblock %}
 </head>
 <body>
 {% block content %}
 <br>
 
 <div>
-    <h1>Входящие запросы</h1>
+    <h1>Входящие запросы:</h1>
 {% for request in friend_requests %}
 {{request.from_user.username}}
-<button onclick="location.href='{% url 'accept' id=request.id operation='accept' %}'" class="btn btn-primary" >Принять</button>
-<button onclick="location.href='{% url 'accept' id=request.id operation='decline' %}'" class="btn btn-secondary">Отклонить</button>
+<button onclick="location.href='{% url 'accept' pk=request.id operation='accept' %}'" class="btn btn-primary" >Принять</button>
+<button onclick="location.href='{% url 'accept' pk=request.id operation='decline' %}'" class="btn btn-secondary">Отклонить</button>
     <hr>
 {% empty %}
-<p>No friend requests</p>
+<p>Входящих запросов нет</p>
 {% endfor %}
     </div>
-
+<hr>
+<div class="ms-1 vw-100 ">
+    <div class="d-inline-block w-50 h-50">
+        <div class="ms-1">
+    <h1>Список друзей:</h1>
+        <hr/>
+    {% for friend in friends %}
+    <a href="{% url 'profile' pk=friend.id %}" style="font-size:25px">{{friend.username}}</a>
+    <br><br>
+    <button onclick="location.href='{% url 'storage' pk=friend.id %}'" class="btn btn-primary" >Открыть хранилище пользователя</button>
+            <button onclick="location.href='{% url 'remove' pk=friend.id redirect_to='userlist' %}'" class="btn btn-primary" >Удалить из друзей</button>
+    <hr/>
+        {% endfor %}
+            </div>
+        {% if friends.has_previous %}
+        <button class="btn btn-secondary" onclick="location.href='?page1={{friends.previous_page_number}}'"><</button>
+        {% endif %}
+        <button class="btn btn-dark" >{{friends.number}}</button>
+        {% if friends.has_next %}
+        <button class="btn btn-secondary" onclick="location.href='?page1={{friends.next_page_number}}'">></button>
+        {% endif %}
+    </div>
+    <div class="d-inline-block bg-dark h-50 text-white rounded-3">
+        <div class="ms-1">
+    <h1>Заблокированные пользователи:</h1>
+        <hr/>
+    {% for blocked_user in blacklist %}
+    <a href="{% url 'profile' pk=blocked_user.id %}" style="font-size:25px">{{blocked_user.username}}</a>
+    <br><br>
+        <button onclick="location.href='{% url 'blacklist' pk=blocked_user.id operation='remove' %}'" class="btn btn-primary" >Разблокировать</button>
+        <hr/>
+            {% empty %}
+            <p>Ваш черный список пуст</p>
+    {% endfor %}
+            </div>
+        {% if blacklist.has_previous %}
+        <button class="btn btn-secondary" onclick="location.href='?page2={{blacklist.previous_page_number}}'"><</button>
+        {% endif %}
+        <button class="btn btn-secondary" >{{blacklist.number}}</button>
+        {% if blacklist.has_next %}
+        <button class="btn btn-secondary" onclick="location.href='?page2={{blacklist.next_page_number}}'">></button>
+        {% endif %}
+        </div>
+</div>
 {% endblock %}
 </body>
 </html>

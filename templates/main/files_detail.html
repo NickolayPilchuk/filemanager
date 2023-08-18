@@ -1,22 +1,71 @@
 {% extends 'base.html' %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
     {% block title %}<title>{{ file.name }}</title>{% endblock %}
-</head>
-<body>
+
 {% block content%}
 <br>
 {% if allowed %}
-<div class="position-absolute top-50 start-50 translate-middle">
-    <h1>{{file.name}}</h1> <p>{{file.user.username}}</p>
-    <h6>{{file.description}}</h6>
-    </div>
+<div class="mx-1">
+    <h1>{{file.name}}</h1> <a href="{% url 'profile' pk=file.user.id%}">{{file.user.username}}</a>
+    <h3>{{file.description}}</h3>
+    <p>Просмотры:    {{file.views}}</p>
+<button onclick="location.href='{% url 'download' pk=file.id %}'" class="btn btn-lg btn-dark">Загрузить</button>
+{% if owned %}
+<button onclick="location.href='{% url 'edit' pk=file.id %}'" class="btn btn-primary" >Редактировать</button>
+    <button onclick="location.href='{% url 'delete' pk=file.id %}'" class="btn btn-primary" >Удалить файл</button>
+{% else %}
+{% endif %}
+</div>
+<br>
+<hr>
+<br>
+<h3>Комментарии:</h3>
+<hr>
+<div class="mx-1">
+<form action="" method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{form.as_p}}
+    <input class="btn btn-dark"  type = "Submit" name="submit" value="Submit"/>
+</form>
+    <hr>
+{% for comment in page %}
+<a href="{% url 'profile' pk=comment.user.id %}" >{{comment.user.username}}</a> <h6 class="d-inline">{{comment.date|date:"d F Y G:i"}}</h6>
+    {% if user == comment.user or user == file.user %}
+    <a  href="{% url 'delete_comment' pk=comment.id %}" class="d-inline">Delete</a>
+
+    {% endif %}
+<h5> {{comment.text }}</h5>
+    <hr>
+
+
+{% empty %}
+<h5>Комментариев пока нет</h5>
+{% endfor %}
+    {% if page.paginator.num_pages < 5 %}
+    {% for num in page.paginator.page_range %}
+    {% if num == page.number %}
+    <button class="d-inline btn btn-dark">{{ num }}</button>
+    {% else %}
+    <button onclick="location.href='?page={{ num }}'" class="d-inline btn btn-light">{{ num }}</button>
+    {% endif %}
+    {% endfor %}
+    {% else %}
+
+
+    {% if page.has_previous %}
+    <button onclick='location.href="?page=1"' class="d-inline btn btn-light">1</button>
+      {% if page.number != 2 %}
+      <button onclick='location.href="?page={{ page.previous_page_number }}"' class="d-inline btn btn-light">{{ page.previous_page_number }}</button>
+      {% endif %}
+  {% endif %}
+    <button class="d-inline btn btn-dark">{{ page.number }}</button>
+    {% if page.has_next %}
+    <button onclick='location.href="?page={{ page.next_page_number }}"' class="d-inline btn btn-light">{{ page.next_page_number }}</button>
+      {% if page.number != page.paginator.num_pages|add:"-1" %}
+      <button onclick='location.href="?page={{ page.paginator.num_pages }}"' class="d-inline btn btn-light">{{page.paginator.num_pages}}</button>
+      {% endif %}
+    {% endif %}
+    {% endif %}
 {% else %}
 <h1>Доступ к файлу ограничен</h1>
 {% endif %}
 {% endblock %}
-
-</body>
-</html>

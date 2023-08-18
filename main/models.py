@@ -8,9 +8,10 @@ class Files (models.Model):
                ('Public','Public'))
     file = models.FileField(upload_to='media/')
     name = models.CharField(max_length=20)
-    description = models.CharField(max_length=300)
+    description = models.CharField(max_length=300,null=True,blank=True)
     user = models.ForeignKey(User,on_delete=models.CASCADE)
     acces = models.CharField(max_length=8,choices=choices,default='Closed')
+    views = models.IntegerField(default=0)
     def __str__(self):
         return self.name
     def get_absolute_url(self):
@@ -19,6 +20,8 @@ class Files (models.Model):
         verbose_name = 'Файл'
         verbose_name_plural = 'Файлы'
 
+class File_Acces(models.Model):
+    file = models.OneToOneField(Files,on_delete=models.CASCADE)
 class Comments(models.Model):
     user = models.ForeignKey(User,on_delete=models.CASCADE)
     text = models.TextField()

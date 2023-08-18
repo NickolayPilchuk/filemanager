@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    {% block title %}<title>Settings</title> {% endblock %}
+</head>
+<body>
+{% block content %}
+<br>
+<h1>Настройки пользователя {{user.username}}</h1>
+<form action="" method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+{{ form.as_p }}
+<input class="btn btn-dark" type = "Submit" name="submit" value="Применить"/>
+</form>
+<br>
+<div>
+<button class="btn btn-dark btn-lg" onclick="location.href='{% url 'change_password' %}'">Сменить пароль</button>
+    </div>
+{% endblock %}
+</body>
+</html>

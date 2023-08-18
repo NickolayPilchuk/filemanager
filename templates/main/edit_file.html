@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    {% block title %}<title>Редактировать файл</title> {% endblock %}
+</head>
+<body>
+{% block content %}
+<br>
+<div class="position-absolute top-50 start-50 translate-middle">
+<form action="" method="POST" enctype="multipart/form-data">
+{% csrf_token %}
+
+{{ form.non_field_errors }}
+
+  {% for hidden_field in form.hidden_fields %}
+    {{ hidden_field.errors }}
+    {{ hidden_field }}
+  {% endfor %}
+
+  <table border="1" cellpadding="5">
+    {% for field in form.visible_fields %}
+      <tr>
+        <th>{{ field.label_tag }}</th>
+        <td>
+          {{ field.errors }}
+          {{ field }}
+        </td>
+      </tr>
+
+    {% endfor %}
+  </table>
+    <br>
+<input class="btn btn-dark" type = "Submit" name="submit" value="Submit"/>
+</form>
+</div>
+{% endblock %}
+</body>
+</html>
