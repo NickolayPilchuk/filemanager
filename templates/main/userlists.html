@@ -34,12 +34,14 @@
     <hr/>
         {% endfor %}
             </div>
+        {% if friends.paginator.num_pages > 1 %}
         {% if friends.has_previous %}
         <button class="btn btn-secondary" onclick="location.href='?page1={{friends.previous_page_number}}'"><</button>
         {% endif %}
         <button class="btn btn-dark" >{{friends.number}}</button>
         {% if friends.has_next %}
         <button class="btn btn-secondary" onclick="location.href='?page1={{friends.next_page_number}}'">></button>
+        {% endif %}
         {% endif %}
     </div>
     <div class="d-inline-block bg-dark h-50 text-white rounded-3">
@@ -55,12 +57,14 @@
             <p>Ваш черный список пуст</p>
     {% endfor %}
             </div>
+        {% if blacklist.paginator.num_pages > 1 %}
         {% if blacklist.has_previous %}
         <button class="btn btn-secondary" onclick="location.href='?page2={{blacklist.previous_page_number}}'"><</button>
         {% endif %}
         <button class="btn btn-secondary" >{{blacklist.number}}</button>
         {% if blacklist.has_next %}
         <button class="btn btn-secondary" onclick="location.href='?page2={{blacklist.next_page_number}}'">></button>
+        {% endif %}
         {% endif %}
         </div>
 </div>

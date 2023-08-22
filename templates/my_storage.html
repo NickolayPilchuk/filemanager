@@ -38,31 +38,7 @@
 
   </div>
     <br>
-    {% if page.paginator.num_pages < 5 %}
-    {% for num in page.paginator.page_range %}
-    {% if num == page.number %}
-    <button onclick="location.href='?page={{ num }}'" class="d-inline btn btn-dark">{{ num }}</button>
-    {% else %}
-    <button onclick="location.href='?page={{ num }}'" class="d-inline btn btn-light">{{ num }}</button>
-    {% endif %}
-    {% endfor %}
-    {% else %}
-
-
-    {% if page.has_previous %}
-    <button onclick='location.href="?page=1"' class="d-inline btn btn-light">1</button>
-      {% if page.number != 2 %}
-      <button onclick='location.href="?page={{ page.previous_page_number }}"' class="d-inline btn btn-light">{{ page.previous_page_number }}</button>
-      {% endif %}
-  {% endif %}
-    <button onclick='location.href="?page={{ page.number }}"' class="d-inline btn btn-dark">{{ page.number }}</button>
-    {% if page.has_next %}
-    <button onclick='location.href="?page={{ page.next_page_number }}"' class="d-inline btn btn-light">{{ page.next_page_number }}</button>
-      {% if page.number != page.paginator.num_pages|add:"-1" %}
-      <button onclick='location.href="?page={{ page.paginator.num_pages }}"' class="d-inline btn btn-light">{{page.paginator.num_pages}}</button>
-      {% endif %}
-  {% endif %}
-    {% endif %}
+  {% include 'inc/_paginator.html' %}
 </div>
 
 </div>

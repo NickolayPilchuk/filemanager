@@ -17,18 +17,14 @@ urlpatterns = [
     path('storage/<pk>',storage,name='storage'),
     path('userlists',userlists,name="userlists"),
 
-    path('upload',UploadFile.as_view(),name = 'upload'),       #Managing files
-    path('files/<int:pk>',FileView.as_view(),name = 'file'),
-    path('edit/<pk>', EditFile.as_view(), name='edit'),
-    path('delete/<pk>', DeleteFile.as_view(), name='delete'),   #Delete a file
-    path('download/<pk>', FileDownload, name='download'),
+
 
     path('send_invite/<user>',invite,name='invite'),    #Friends & Blacklist
     path('accept/<pk>/<operation>',accept,name='accept'),
     path('delete_user/<pk>/<redirect_to>',whitelist_delete,name='remove'), #Remove user from friendlist
     path('blacklist/<pk>/<operation>',blacklist,name='blacklist'),
 
-    path('delete_comment/<int:pk>', delete_comment,name='delete_comment'),
+
 
 
 
