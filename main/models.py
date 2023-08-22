@@ -19,6 +19,11 @@ class Files (models.Model):
     class Meta:
         verbose_name = 'Файл'
         verbose_name_plural = 'Файлы'
+    def delete(self, using=None, keep_parents=False,*args,**kwargs):
+        self.file.delete(save=False)
+        super(Files,self).delete(*args,**kwargs)
+
+
 
 class File_Acces(models.Model):
     file = models.OneToOneField(Files,on_delete=models.CASCADE)

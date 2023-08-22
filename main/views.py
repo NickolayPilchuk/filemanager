@@ -27,6 +27,7 @@ def registration(request):
         form = UserCreationForm()
     return render(request,'registration/registration.html',{'form':form})
 
+
 class ProfileView(LoginRequiredMixin,DetailView):
     login_url = 'login'
     model = User
